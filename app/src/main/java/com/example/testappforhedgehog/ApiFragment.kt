@@ -14,6 +14,7 @@ import com.example.testappforhedgehog.databinding.FragmentJokesBinding
 
 class ApiFragment : Fragment() {
     lateinit var binding: FragmentApiBinding
+    private var webviewstate: Bundle? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,17 +26,28 @@ class ApiFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        if (savedInstanceState != null){
+        if (savedInstanceState == null){
+            loadUrl()
+        }
+        else binding.wbV.restoreState(webviewstate!!)
+    /*старый вариант неработающий
+        if (savedInstanceState = null){
             binding.wbV.restoreState(savedInstanceState)
         }
-        else loadUrl()
+        else loadUrl()*/
   }
 
+    override fun onPause() {
+        super.onPause()
+        webviewstate = Bundle()
+        binding.wbV.saveState(webviewstate!!)
+    }
 
+    /*старый неработающий вариант
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         binding.wbV.saveState(outState)
-    }
+    }*/
 
 
     companion object {

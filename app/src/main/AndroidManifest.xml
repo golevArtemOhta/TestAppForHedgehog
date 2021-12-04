@@ -14,7 +14,7 @@
         android:theme="@style/Theme.TestAppForHedgehog">
         <activity
             android:name=".MainActivity"
-            android:windowSoftInputMode="adjustResize"
+            android:windowSoftInputMode="stateHidden|adjustResize"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/jokes"
             android:exported="true">

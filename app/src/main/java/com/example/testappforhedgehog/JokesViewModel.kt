@@ -1,8 +1,16 @@
 package com.example.testappforhedgehog
 
+import android.provider.Settings
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.json.JSONObject
+import retrofit2.Retrofit
+import retrofit2.awaitResponse
+import retrofit2.converter.gson.GsonConverterFactory
 import java.net.URL
 
 class JokesViewModel: ViewModel() {
@@ -11,8 +19,32 @@ class JokesViewModel: ViewModel() {
     var thread: Thread? = null
 
 
+    fun request(etCount: String){
+        val api = Retrofit.Builder()
+            .baseUrl("https://api.icndb.com")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(ApiRequests::class.java)
 
-    fun request(etCount: Int){
+        GlobalScope.launch(Dispatchers.IO){
+            val response = api.getJokeRandom(etCount).awaitResponse()
+            if (response.isSuccessful){
+                val data = response.body()!!
+
+                withContext(Dispatchers.Main){
+                    val jokes = data.value
+                    val jokesList = mutableListOf<String>()
+                    for (i in jokes){
+                        jokesList.add(i.joke)
+                    }
+                     items.postValue(jokesList)
+                }
+            }
+        }
+
+    }
+
+   /* fun request(etCount: Int){
 
         val url: String = "https://api.icndb.com/jokes/random/${etCount}"
 
@@ -34,5 +66,5 @@ class JokesViewModel: ViewModel() {
         }
         thread?.start()
 
-    }
+    }*/
 }

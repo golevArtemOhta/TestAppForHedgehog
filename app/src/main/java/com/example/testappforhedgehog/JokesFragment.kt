@@ -40,7 +40,7 @@ class JokesFragment : Fragment() {
         binding.listViewJokes.adapter = adapter
 
         binding.btnReload.setOnClickListener {
-            jokesViewModel.request(binding.etCount.text.toString().toInt())
+            jokesViewModel.request(binding.etCount.text.toString())
         }
     }
 
