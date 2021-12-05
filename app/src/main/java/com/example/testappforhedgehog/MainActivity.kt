@@ -16,11 +16,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         openFrag(JokesFragment.newInstance(), R.id.place_holder)
 
         binding.btnWeb.setOnClickListener {
-            setTitle("Api info")
+            title = "Api info"
             binding.btnWeb.setImageResource(R.drawable.web_blue)
             binding.btnJoke.setImageResource(R.drawable.joke_grey)
             binding.tvWeb.setTextColor(ContextCompat.getColor(this, R.color.blue))
@@ -30,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.btnJoke.setOnClickListener {
-            setTitle("Jokes")
+            title = "Jokes"
             binding.btnWeb.setImageResource(R.drawable.web_grey)
             binding.btnJoke.setImageResource(R.drawable.joke_blue)
             binding.tvWeb.setTextColor(ContextCompat.getColor(this, R.color.gray))
@@ -38,13 +37,12 @@ class MainActivity : AppCompatActivity() {
 
             openFrag(JokesFragment.newInstance(), R.id.place_holder)
         }
-
     }
+
     private fun openFrag(f: Fragment, idHolder: Int){
         supportFragmentManager
             .beginTransaction()
             .replace(idHolder, f)
             .commit()
     }
-
 }
