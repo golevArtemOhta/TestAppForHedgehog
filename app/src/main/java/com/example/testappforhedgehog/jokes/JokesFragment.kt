@@ -1,4 +1,4 @@
-package com.example.testappforhedgehog
+package com.example.testappforhedgehog.jokes
 
 import android.R
 import android.os.Bundle

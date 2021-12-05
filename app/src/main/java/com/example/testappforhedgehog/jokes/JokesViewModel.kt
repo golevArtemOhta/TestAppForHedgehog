@@ -1,4 +1,4 @@
-package com.example.testappforhedgehog
+package com.example.testappforhedgehog.jokes
 
 import android.os.Build
 import android.text.Html
@@ -6,23 +6,19 @@ import android.text.Spanned
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.testappforhedgehog.api.RetrofitFactory
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class JokesViewModel : ViewModel() {
 
-    val items = MutableLiveData<MutableList<String>>()
+    val items = MutableLiveData<List<String>>()
     private val api = RetrofitFactory.new()
+    private var job: Job? = null
 
     fun request(etCount: String) {
-        viewModelScope.launch(Dispatchers.IO) {
+        job?.cancel()
+        job = viewModelScope.launch(Dispatchers.IO) {
             val joke = api.getJokeRandom(etCount)
-                val jokesList = mutableListOf<String>()
-                for (i in joke.value) {
-                    jokesList.add(fromHtml(i.joke).toString())
-                }
-                items.postValue(jokesList)
+                items.postValue(joke.jokes.map { fromHtml(it.joke).toString() })
         }
     }
 
