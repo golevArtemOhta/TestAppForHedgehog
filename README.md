@@ -4,6 +4,6 @@
 Приложение выполнено с использованием Fragment'ов, ViewBunding. Запросы данных с сервера выполнены с использованием Retrofit 2 и Coroutines.    
 Сохранение состояния WebView при повороте экрана и навигация по системной кнопке Back также выполнена.
 
-Скриншоты экрана: https://github.com/golevArtemOhta/TestAppForHedgehog/blob/master/TestAppForHedgehogScreenshots.png?raw=true
+Скриншоты экрана: ![alt text](https://github.com/golevArtemOhta/TestAppForHedgehog/blob/master/TestAppForHedgehogScreenshots.png?raw=true)
 
 
